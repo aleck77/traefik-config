@@ -1,14 +1,15 @@
 services:
   traefik:
-    image: "traefik"
+    image: "traefik:latest"
     restart: always
     command:
       - "--log.level=ERROR"
-      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
@@ -21,16 +22,16 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /home/sasha/traefik:/etc/traefik
-      - /home/sasha/traefik/letsencrypt:/letsencrypt
+      - ./letsencrypt:/letsencrypt
+    networks:
+      - n8n_default
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`${SUBDOMAIN}.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=mytlschallenge"
       - "traefik.http.routers.traefik.service=api@internal"
-    networks:
-      - n8n_default
+
 networks:
   n8n_default:
     external: true
