@@ -27,12 +27,13 @@ services:
       - n8n_default
     labels:
       - "traefik.enable=true"
+      - "traefik.http.middlewares.traefik-compress.compress=true"
       - "traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$05$$rpxRQEDsOaSOgUEAf6AG4uVp7SGAIOxXVxXBg2BoJwpG6bOoW20Uq"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=mytlschallenge"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      - "traefik.http.routers.traefik.middlewares=traefik-compress,auth"
 
 networks:
   n8n_default:
