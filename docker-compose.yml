@@ -28,7 +28,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.traefik-compress.compress=true"
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$05$$rpxRQEDsOaSOgUEAf6AG4uVp7SGAIOxXVxXBg2BoJwpG6bOoW20Uq"
+      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_AUTH_USER}:${TRAEFIK_AUTH_HASH}"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN}`)"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=mytlschallenge"
