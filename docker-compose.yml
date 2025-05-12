@@ -32,7 +32,7 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=mytlschallenge"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$05$$rpxRQEDsOaSOgUEAf6AG4uVp7SGAIOxXVxXBg2BoJwpG6bOoW20Uq"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$2y$$05$$rpxRQEDsOaSOgUEAf6AG4uVp7SGAIOxXVxXBg2BoJwpG6bOoW20Uq"
 
 networks:
   n8n_default:
