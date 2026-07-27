@@ -25,6 +25,7 @@ services:
       - ./letsencrypt:/letsencrypt
     networks:
       - n8n_default
+      - proxy_net
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN}`)"
@@ -37,3 +38,6 @@ services:
 networks:
   n8n_default:
     external: true
+  proxy_net:
+    name: proxy_net
+    driver: bridge
